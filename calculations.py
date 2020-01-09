@@ -1,6 +1,7 @@
 %matplotlib inline
 import numpy as np
 import pandas as pd
+from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
@@ -71,7 +72,7 @@ def calculate_60(start_year, wr, pct_equity=0.5):
 def prob_success_30(wr):
     success = 0
     for i in range(0,120):
-        result = calculate_30(i, wr, ax)
+        result = calculate_30(i, wr)
         if result > 0:
             success += 1
     return success/120
@@ -79,7 +80,7 @@ def prob_success_30(wr):
 def prob_success_60(wr):
     success = 0
     for i in range(0,90):
-        result = calculate_60(i, wr, ax)
+        result = calculate_60(i, wr)
         if result > 0:
             success += 1
     return success/90
@@ -91,15 +92,27 @@ for i in range(len(wr_list)):
     prob_30.append(prob_success_30(wr_list[i]))
     prob_60.append(prob_success_60(wr_list[i]))
 
+years_30 = np.arange(0,120)
+end_balance_30 = []
+years_60 = np.arange(0,90)
+end_balance_60 = []
+for i in range(len(years_30)):
+    end_balance_30.append(calculate_30(years_30[i], 0.04))
+for i in range(len(years_60)):
+    end_balance_60.append(calculate_60(years_60[i], 0.04))
+    
+fig = make_subplots(rows=1, cols=2, subplot_titles=('Ending Portfolio Balance (Starting Balance = $1M)', 'Probability of Success'))
+fig.add_trace(go.Scatter(x=years30, y=end_balance_30, name='30-year retirement'), row=1, col=1)
+fig.add_trace(go.Scatter(x=years60, y=end_balance_60, name='60-yr retirement'), row=1, col=1)
+fig.add_trace(go.Scatter(x=wr_list, y=prob_30, name='30-yr retirement'), row=1, col=2)
+fig.add_trace(go.Scatter(x=wr_list, y=prob_60, name='60-yr retirement'), row=1, col=2)
+fig.update_xaxes(title_text='Year Retirement Began', row=1, col=1)
+fig.update_yaxes(title_text='Ending Portfolio Balance', row=1, col=1)
+fig.update_xaxes(title_text='Initial Withdrawal Rate', row=1, col=2)
+fig.update_yaxes(title_text='Probability of Success', row=1, col=2)
 
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=wr_list, y=prob_30, name='30-yr retirement'))
-fig.add_trace(go.Scatter(x=wr_list, y=prob_60, name='60-yr retirement'))
-fig.update_layout(title='Probability of Portfolio Success Based on Withdrawal Rate',
-                   xaxis_title='Initial Withdrawal Rate',
-                   yaxis_title='Probability of Success')
 fig.show()
-#fig.write_image('prob_range_comparison.png')
+#fig.write_image('portfolio_success_4pct.png')
 
 
 

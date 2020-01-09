@@ -11,4 +11,4 @@ Assumptions:
 4. A single withdrawal is made on Jan. 1 each year to cover expenses for the year ahead. Yearly gains/losses on the remaining balance are calculated on Dec. 31 that year.
 
 
-![Line Plot comparing probabilities](prob_range_comparison.png)
+![Line Plot comparing probabilities](portfolio_success_4pct.png)
