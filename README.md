@@ -1,4 +1,4 @@
-# Retirement Success
+# Long-Haul Retirement
 
 ## Introduction
 
@@ -25,7 +25,7 @@ Randomized stock market returns were generated for the same historical time peri
 
 Year-to-year valuations were calculated from the initial real-world stock price in 1871. The probability of portfolio success was calculated and plotted for 100 randomly generated datasets using a 30-year time horizon and a 60-year time horizon at a 3% withdrawal rate and a 4% withdrawal rate.
 
-## Observations
+## Results
 
 The ending portfolio balance displays a drastically greater range of values over a longer time horizon.
 
@@ -39,7 +39,8 @@ Randomized market returns appear to have a significantly lower probability of su
 
 ![Scatter plot of probabilities based on randomized data, 3%](images/portfolio_success_random_3pct.png)
 
-## Conclusion
+Based on these results, the more risk-averse retiree would institute an initial withdrawal rate of 3% or less (i.e. save 34 times their annual expenses) to account for any time horizon. More adaptable retirees would be able to use an initial withdrawal rate of 4% since success is still fairly probable.
 
-The most risk-averse person would be advised to use a 2.5% withdrawal rate for the asset allocations analyzed here. To achieve a probability of success close to the 4% rule, a 60-year time horizon would require a withdrawal rate closer to 3%.
+## Future Study
 
+With more time, the data could be explored more deeply. The randomization of market returns could be more sophisticated than the randomization method used here. It would also be helpful to look at the effect of changing asset allocation (e.g. 75/25 stocks/bonds), especially with the low interest rates in recent years. 
