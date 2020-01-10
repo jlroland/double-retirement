@@ -1,10 +1,12 @@
-# double-retirement
+# Retirement Success
 
 ## Introduction
 
 Traditionally, retirement planning has focused on building a portfolio that will sustain a 30-year retirement (e.g. retire at age 65 with enough funds to last until age 95). Studies have been conducted using 20th century investment returns to determine a safe withdrawal rate (SWR). The SWR would have a high probability of portfolio success (defined as not fully depleting portfolio funds within 30 years). Various studies have examined the effects of asset type, asset allocation and withdrawal rate on portfolio success over a 30-year period. 
 
 As people live longer and try to retire earlier, it would be helpful to examine retirement planning over a longer time horizon. A growing number of people live past the age of 100, and a movement focused on retiring early has gained momentum in recent years. Under such circumstances, what is the probability of a retirement portfolio lasting 60 years instead of 30 years at a 4% withdrawal rate? Would a lower withdrawal rate increase the probability of success significantly?
+
+Annual market data was obtained from http://www.econ.yale.edu/~shiller/data.htm.
 
 ### Assumptions:
 1. Brokerage fees and taxes are not considered (i.e. they should be paid from withdrawn funds).

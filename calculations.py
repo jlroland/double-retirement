@@ -18,7 +18,7 @@ def calculate_interest(principal, rate):
     return principal*((1+rate/4)**4)
 
 def calculate_portfolio(num_years, start_year, wr, pct_equity=0.5):
-    init_portfolio = 1000000
+    init_portfolio = 100000
     withdrawal_amount = init_portfolio*wr
     year1_balance = init_portfolio-withdrawal_amount
     equity_portion = pct_equity*year1_balance 
@@ -58,21 +58,18 @@ for i in range(len(years_30)):
 for i in range(len(years_60)):
     end_balance_60.append(calculate_portfolio(60, years_60[i], 0.04))
 
-fig = make_subplots(rows=1, cols=2, subplot_titles=('Ending Portfolio Balance (Starting Balance = $1M)', 'Probability of Success'))
-fig.add_trace(go.Scatter(x=years_30, y=end_balance_30, name='30-year retirement'), row=1, col=1)
-fig.add_trace(go.Scatter(x=years_60, y=end_balance_60, name='60-yr retirement'), row=1, col=1)
-fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob30'][1], name='30-yr retirement'), row=1, col=2)
-fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob40'][1], name='40-yr retirement'), row=1, col=2)
-fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob50'][1], name='50-yr retirement'), row=1, col=2)
-fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob60'][1], name='60-yr retirement'), row=1, col=2)
-fig.update_xaxes(title_text='Year Retirement Began', row=1, col=1)
+fig = make_subplots(rows=1, cols=2, subplot_titles=('Ending Portfolio Balance (Starting Balance = $100K)', 'Probability of Success'))
+fig.add_trace(go.Scatter(x=refined_data['Year'][0:112], y=end_balance_30, name='30-year retirement'), row=1, col=1)
+fig.add_trace(go.Scatter(x=refined_data['Year'][0:112], y=end_balance_60, name='60-yr retirement'), row=1, col=1)
+fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob30'][1], name='30-yr retirement', line=dict(color='royalblue', width=3, dash='dot')), row=1, col=2)
+fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob40'][1], name='40-yr retirement', line=dict(color='green', width=3, dash='dot')), row=1, col=2)
+fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob50'][1], name='50-yr retirement', line=dict(color='orange', width=3, dash='dot')), row=1, col=2)
+fig.add_trace(go.Scatter(x=wr_list, y=num_years_dict['prob60'][1], name='60-yr retirement', line=dict(color='red', width=3, dash='dot')), row=1, col=2)
+fig.update_xaxes(title_text='Year Retirement Began', nticks=10, row=1, col=1)
 fig.update_yaxes(title_text='Ending Portfolio Balance', row=1, col=1)
 fig.update_xaxes(title_text='Initial Withdrawal Rate', row=1, col=2)
 fig.update_yaxes(title_text='Probability of Success', row=1, col=2)
+fig.update_layout(title='Analysis Based on Historical Investment Returns')
 
 fig.show()
-#fig.write_image('images/portfolio_success_4pct.png')
-
-fig = go.Figure(data=[go.Histogram(x=refined_data['Return on S&P Composite'])])
-fig.show()
-#fig.write_image('images/annual_returns_frequency.png')
+#fig.write_image('images/portfolio_success_historical_4pct.png', width=1000, height=500)
