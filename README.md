@@ -20,7 +20,7 @@ Based on historical data, length of retirement has little effect on the probabil
 
 Randomized market returns appear to support a 95% probability of success for a 4% withdrawal rate over a 30-year period. The same randomized data would suggest that 4% over a 60-year period has a probability of success closer to 87%. The probabilities increase for the randomized data to 98% and 93%, respectively, when the withdrawal rate is decreased to 3%.
 
-![Line Plot comparing probabilities](portfolio_success_4pct.png)
+![Line Plot comparing probabilities](images/portfolio_success_4pct.png)
 
 ## Conclusion
 
