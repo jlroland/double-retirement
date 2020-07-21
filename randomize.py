@@ -5,13 +5,7 @@ from statistics import mean
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-annual_data = pd.read_csv('data/shiller_annual_data.csv', index_col=False)
-
-refined_data = annual_data[['Year', 'Consumer Price Index','Long Government Bond Yield','RealP Stock Price','RealD S&P Dividend', 'Return on S&P Composite']]
-refined_data.drop(refined_data[refined_data['Year'] >= 2013].index, inplace=True)    #removed 2013 data since not all data is available
-refined_data['Long Government Bond Yield'] = refined_data['Long Government Bond Yield']/100
-refined_data['Annual Inflation'] = refined_data['Consumer Price Index'].pct_change().round(4)
-refined_data['Annual Inflation'][0] = refined_data['Annual Inflation'][1]  #in absence of known rate, using following year's rate
+run calculations.py
 
 fig = go.Figure(data=[go.Histogram(x=refined_data['Return on S&P Composite'])])
 fig.update_layout(
@@ -35,10 +29,6 @@ def get_random_data():
     rand_returns = np.around(np.array(rand_returns),4)
     rand_price = np.array(rand_price)
     return rand_price,rand_returns
-
-#calculates bond interest compounded quarterly
-def calculate_interest(principal, rate):
-    return principal*((1+rate/4)**4)
 
 def calculate_rand_portfolio(num_years, start_year, wr, pct_equity=0.5):
     init_portfolio = 100000

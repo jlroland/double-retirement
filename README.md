@@ -33,7 +33,7 @@ The ending portfolio balance displays a drastically greater range of values over
 
 Based on historical data, length of retirement has little effect on the probability of success for withdrawal rates up to 4%. In fact, historical data reflects greater probability of success at 4% over a 60-year time horizon. For withdrawal rates greater than 4%, time periods greater than 30 years have lower probability of success until a 10% withdrawal rate. There seems to be little difference in the probabilities between 40, 50 and 60 years.
 
-Randomized market returns appear to have a significantly lower probability of success for a 4% withdrawal rate over both time horizons. A 30-year retirement portfolio would have a 77% chance of success while a 60-year retirement portfolio would have a 57% chance of success. These probabilities increase to 93% and 74%, respectively, if the withdrawal rate is decreased to 3%.
+Randomized market returns appear to have a significantly lower probability of success for a 4% withdrawal rate over both time horizons. A 30-year retirement portfolio would have a 78% chance of success while a 60-year retirement portfolio would have a 57% chance of success. These probabilities increase to 93% and 74%, respectively, if the withdrawal rate is decreased to 3%.
 
 ![Scatter plot of probabilities based on randomized data, 4%](images/portfolio_success_random_4pct.png)
 
