@@ -5,8 +5,9 @@ from statistics import mean
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-run calculations.py
+run calculations.py     #import clean data & function to calculate interest
 
+#display distribution of historical returns for S&P 500
 fig = go.Figure(data=[go.Histogram(x=refined_data['Return on S&P Composite'])])
 fig.update_layout(
     title_text='Frequency of S&P Returns',
@@ -16,13 +17,18 @@ fig.update_layout(
 fig.show()
 #fig.write_image('images/annual_returns_frequency.png')
 
+#want to create a simulation of "historical" data based on randomized returns
+#distribution of historical returns will be used to approximate boundaries for randomization
 def get_random_data():
+    '''
+    Generates two arrays--one for random market returns and one for share prices resulting from the random returns.
+    '''
     rand_returns = []
 
     for i in range(142):
         rand_returns.append(random.choice([random.triangular(-0.5, 0.075, 0.025),random.triangular(0.075, 0.5, 0.125)]))
 
-    rand_price = [82.03]
+    rand_price = [82.03]        #share price for S&P 500 in 1871
     for i in range(len(rand_returns)-1):
         rand_price.append(rand_price[i]*(1+rand_returns[i]))
 
@@ -31,6 +37,19 @@ def get_random_data():
     return rand_price,rand_returns
 
 def calculate_rand_portfolio(num_years, start_year, wr, pct_equity=0.5):
+    '''
+    Calculates ending portfolio balance over a given timeframe when starting with a balance of $100,000. The calculation is made using the specified annual withdrawal rate and specified asset allocation (default 50/50 equities/fixed income). The equity share price values are randomized instead of historical values.
+    
+    Parameters:
+    num_years (int): length of retirement period
+    start_year (int): historical calendar year in which retirement period starts
+    wr (float): initial withdrawal rate
+    pct_equity (float): percent of portfolio invested in equities, default=0.5
+
+    Returns:
+    portfolio (float): ending portfolio balance in dollars
+
+    '''
     init_portfolio = 100000
     withdrawal_amount = init_portfolio*wr
     year1_balance = init_portfolio-withdrawal_amount
@@ -48,6 +67,17 @@ def calculate_rand_portfolio(num_years, start_year, wr, pct_equity=0.5):
     return portfolio
 
 def prob_rand_success(num_years, wr):
+    '''
+    Calculates the probability of portfolio success based on historical data for a specified retirement length and initial withdrawal rate; portfolio success is defined as an ending portfolio balance greater than zero. The equity share prices in the historical data have been replaced with randomized data.
+
+    Parameters:
+    num_years (int): length of retirement period
+    wr (float): initial withdrawal rate
+
+    Returns:
+    probability of success (float): probability of ending portfolio balance >0, based on past observations
+    
+    '''
     success = 0
     for i in range(0,142-num_years):
         result = calculate_rand_portfolio(num_years, i, wr)
@@ -55,7 +85,7 @@ def prob_rand_success(num_years, wr):
             success += 1
     return success/(142-num_years)
 
-
+#running 100 iterations of randomization to plot distribution for 4% withdrawal rate, comparing 30-yr and 60-yr retirements
 prob_rand_30 = []
 prob_rand_60 = []
 for i in range(100):
@@ -110,7 +140,7 @@ fig.show()
 #fig.write_image('portfolio_success_random_4pct.png')
 
 
-
+#running 100 iterations of randomization to plot distribution for 3% withdrawal rate, comparing 30-yr and 60-yr retirements
 prob_rand_30_3 = []
 prob_rand_60_3 = []
 for i in range(100):

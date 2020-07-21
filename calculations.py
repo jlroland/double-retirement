@@ -3,11 +3,11 @@ import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-
+#data file contains historical market data for time period 1871-2016
 annual_data = pd.read_csv('data/shiller_annual_data.csv', index_col=False)
 
 refined_data = annual_data[['Year', 'Consumer Price Index','Long Government Bond Yield','RealP Stock Price','RealD S&P Dividend', 'Return on S&P Composite']]
-refined_data.drop(refined_data[refined_data['Year'] >= 2013].index, inplace=True)    #removed 2013 data since not all data is available
+refined_data.drop(refined_data[refined_data['Year'] >= 2013].index, inplace=True)    #removed 2013-2016 data since not all data is available for those years
 refined_data['Long Government Bond Yield'] = refined_data['Long Government Bond Yield']/100
 refined_data['Annual Inflation'] = refined_data['Consumer Price Index'].pct_change().round(4)
 refined_data['Annual Inflation'][0] = refined_data['Annual Inflation'][1]  #in absence of known rate, using following year's rate
@@ -67,14 +67,17 @@ def prob_success(num_years, wr):
             success += 1
     return success/(142-num_years)
 
-retire_length = np.arange(30, 61, 10)
-wr_list = np.linspace(0, 0.1, 21)
+retire_length = np.arange(30, 61, 10)   #want to vary length of retirement period--30, 40, 50, 60 years
+wr_list = np.linspace(0, 0.1, 21)   #want to vary initial withdrawal rate 0-10% in increments of 1%
 
+#create dictionary where key is retirement length and values are lists containing probability of success for each initial withdrawal rate
 num_years_dict = {"prob{}".format(val): (val, []) for i, val in enumerate(retire_length)}
 for i in range(len(wr_list)):
     for k,v in sorted(num_years_dict.items()):
         num_years_dict[k][1].append(prob_success(num_years_dict[k][0], wr_list[i]))
         
+
+#calculate ending portfolio balance at 4% withdrawal rate for 30-yr and 60-yr retirements for all historical periods
 years_30 = np.arange(0,112)
 end_balance_30 = []
 years_60 = np.arange(0,82)
@@ -83,6 +86,7 @@ for i in range(len(years_30)):
     end_balance_30.append(calculate_portfolio(30, years_30[i], 0.04))
 for i in range(len(years_60)):
     end_balance_60.append(calculate_portfolio(60, years_60[i], 0.04))
+
 
 fig = make_subplots(rows=1, cols=2, subplot_titles=('Ending Portfolio Balance (Starting Balance = $100K)', 'Probability of Success'))
 fig.add_trace(go.Scatter(x=refined_data['Year'][0:112], y=end_balance_30, name='30-year retirement'), row=1, col=1)
