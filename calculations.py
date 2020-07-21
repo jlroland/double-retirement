@@ -13,11 +13,26 @@ refined_data['Annual Inflation'] = refined_data['Consumer Price Index'].pct_chan
 refined_data['Annual Inflation'][0] = refined_data['Annual Inflation'][1]  #in absence of known rate, using following year's rate
 
 
-#calculates bond interest compounded quarterly
 def calculate_interest(principal, rate):
+    '''
+    Calculates bond interest compounded quarterly
+    '''
     return principal*((1+rate/4)**4)
 
 def calculate_portfolio(num_years, start_year, wr, pct_equity=0.5):
+    '''
+    Calculates ending portfolio balance over a given timeframe when starting with a balance of $100,000. The calculation is made using the specified annual withdrawal rate and specified asset allocation (default 50/50 equities/fixed income).
+    
+    Parameters:
+    num_years (int): length of retirement period
+    start_year (int): historical calendar year in which retirement period starts
+    wr (float): initial withdrawal rate
+    pct_equity (float): percent of portfolio invested in equities, default=0.5
+
+    Returns:
+    portfolio (float): ending portfolio balance in dollars
+
+    '''
     init_portfolio = 100000
     withdrawal_amount = init_portfolio*wr
     year1_balance = init_portfolio-withdrawal_amount
@@ -34,6 +49,17 @@ def calculate_portfolio(num_years, start_year, wr, pct_equity=0.5):
     return portfolio
 
 def prob_success(num_years, wr):
+    '''
+    Calculates the probability of portfolio success based on historical data for a specified retirement length and initial withdrawal rate; portfolio success is defined as an ending portfolio balance greater than zero. 
+
+    Parameters:
+    num_years (int): length of retirement period
+    wr (float): initial withdrawal rate
+
+    Returns:
+    probability of success (float): probability of ending portfolio balance >0, based on past observations
+    
+    '''
     success = 0
     for i in range(0,142-num_years):
         result = calculate_portfolio(num_years, i, wr)
